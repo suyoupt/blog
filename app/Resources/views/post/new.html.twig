@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Create a post</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-primary" value="创建" />
+        {{ form_end(form) }}
+
+    </div>
+{% endblock body %}

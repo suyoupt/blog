@@ -1,8 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-     {% for post in posts %}
-         <h1> {{ post.title }} </h1>
-         <p> {{ post.body }}</p>
-     {% endfor %}
+    <div class="container">
+        <h1>List posts</h1>
+        <div class="list-group">
+            {% for post in posts %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ post.title }} </h5>
+                    <small>{{ post.createdAt | date("y-m-d h:i") }} </small>
+                </div>
+                <p class="mb-1">{{ post.body }} </p>
+                <small class="text-muted"><a href="{{ path("post_edit", { id: post.id }) }}">edit</a></small>
+            </div>
+            {% endfor %}
+        </div>
+        <br />
+        <a href="{{ path("post_new") }}" class="btn btn-primary  " role="button" aria-pressed="true">Create new post</a>
+    </div>
 {% endblock body %}
