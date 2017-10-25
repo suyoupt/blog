@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostType;
+use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,7 +31,18 @@ class PostController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $posts = $this->getDoctrine()->getRepository("AppBundle:Post")->findAll();
+       // $posts = $this->getDoctrine()->getRepository("AppBundle:Post")->findAll();
+        /** @var QueryBuilder $qb */
+//        $qb = $this->getDoctrine()->getRepository("AppBundle:Post")->createQueryBuilder("p");
+//        $query = $qb->leftJoin("p.createdBy", "c")
+//            ->where("c.id = :id")
+//            ->setParameter("id", $this->getUser()->getId())
+//            ->getQuery()
+//        ;
+
+        $posts = $this->getDoctrine()->getRepository("AppBundle:Post")->getByUser($this->getUser()->getId());
+
+
 
         return $this->render("post/index.html.twig", [
             "posts" => $posts
@@ -49,6 +61,7 @@ class PostController extends Controller
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+            $post->setCreatedBy($this->getUser());
             $em->persist($post);
             $em->flush();
             return $this->redirectToRoute("post_index");

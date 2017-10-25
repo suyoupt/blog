@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -23,6 +24,12 @@ class User extends BaseUser
     protected $id;
 
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="createdBy")
+     */
+    protected $posts;
     /**
      * Get id
      *
