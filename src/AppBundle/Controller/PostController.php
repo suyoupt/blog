@@ -16,6 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
+/**
+ * Class PostController
+ * @package AppBundle\Controller
+ *
+ * @Route("/admin")
+ */
 class PostController extends Controller
 {
     /**
