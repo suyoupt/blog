@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Post;
 use AppBundle\Form\PostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,4 +75,23 @@ class PostController extends Controller
             "post" => $post
         ]);
     }
+
+    /**
+     * @Route("/post/{id}/publish", name="post_publish")
+     *
+     */
+    public function publishAction(Request $request, Post $post)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post->setStatus(POst::STATUS_PUBLISHED);
+        //$em->persist($post);
+        $em->flush();
+        return $this->redirectToRoute("post_index");
+//        $form = $this->createFormBuilder()
+//            ->setAction($this->generateUrl("post_publish", array( "id" => $post->getId())))
+//            ->setMethod("post")
+//            ->getForm();
+
+    }
+
 }

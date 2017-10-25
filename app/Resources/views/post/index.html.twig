@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+        #post-card { margin-top: 20px; .media {  border-top: 1px solid #b1dfbb; padding: 20px 10px; }
+        .media:first-child { border-top: 0px solid #b1dfbb; }
+    </style>
     <div class="container">
-        <h1>List posts</h1>
-        <div class="list-group">
-            {% for post in posts %}
-            <div class="list-group-item list-group-item-action flex-column align-items-start ">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ post.title }} </h5>
-                    <small>{{ post.createdAt | date("y-m-d h:i") }} </small>
-                </div>
-                <p class="mb-1">{{ post.body }} </p>
-                <small class="text-muted"><a href="{{ path("post_edit", { id: post.id }) }}">edit</a></small>
+
+        <div id="post-card" class="card">
+            <div class="card-header">
+                List posts
             </div>
-            {% endfor %}
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    {% for post in posts %}
+                        <li class="media">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">{{ post.title }}
+                                    {% if post.status == 1 %}
+                                        <a class="badge float-right badge-primary " href="{{ path("post_publish", { id : post.id }) }}">Publish</a>
+                                    {% else %}
+                                        <span class="badge float-right badge-success ">Published</span>
+                                    {% endif %}
+                                    <a class="badge float-right badge-primary " href="{{ path("post_edit", { id: post.id }) }}">edit</a>
+                                </h5>
+                                {{ post.body }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
+
+
+
+
+
         <br />
         <a href="{{ path("post_new") }}" class="btn btn-primary  " role="button" aria-pressed="true">Create new post</a>
     </div>
