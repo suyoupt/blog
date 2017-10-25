@@ -19,6 +19,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path("homepage") }}">Home <span class="sr-only">(current)</span></a>
                 </li>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li class="nav-item">
+                    <a class="nav-link">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('post_index') }}">My posts</a>
+                </li>
+                {% endif %}
+                <li class="nav-item ">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                        <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% else %}
+                        <a class="nav-link" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </nav>
