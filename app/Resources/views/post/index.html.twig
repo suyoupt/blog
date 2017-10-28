@@ -2,10 +2,16 @@
 
 {% block body %}
     <style>
-        #post-card { margin-top: 20px; .media {  border-top: 1px solid #b1dfbb; padding: 20px 10px; }
+        #post-card { margin-top: 20px;}
+        .media {  border-top: 1px solid #b1dfbb; padding: 20px 10px; }
         .media:first-child { border-top: 0px solid #b1dfbb; }
     </style>
     <div class="container">
+
+        <form  action="" method="GET">
+            <input class="" type="text" name="word" size="100" minlength="1" maxlength="50" />
+            <input class="btn btn-primary" type="submit" value="search" />
+        </form>
 
         <div id="post-card" class="card">
             <div class="card-header">
@@ -17,12 +23,20 @@
                         <li class="media">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">{{ post.title }}
+                                    <small>
+
                                     {% if post.status == 1 %}
-                                        <a class="badge float-right badge-primary " href="{{ path("post_publish", { id : post.id }) }}">Publish</a>
+                                        <span class="badge  badge-primary " >Publish</span>
                                     {% else %}
-                                        <span class="badge float-right badge-success ">Published</span>
+                                        <span class="badge badge-success ">Published</span>
                                     {% endif %}
-                                    <a class="badge float-right badge-primary " href="{{ path("post_edit", { id: post.id }) }}">edit</a>
+                                    </small>
+                                    <div class="float-right">
+
+                                        <a class="badge badge-primary " href="{{ path("post_show", { id: post.id }) }}">show</a>
+                                        <a class="badge badge-primary " href="{{ path("post_edit", { id: post.id }) }}">edit</a>
+                                    </div>
+
                                 </h5>
                                 {{ post.body }}
                             </div>
