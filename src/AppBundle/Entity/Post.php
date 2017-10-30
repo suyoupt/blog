@@ -9,6 +9,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Class Post
@@ -16,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\Table(name="post")
+ * @Vich\Uploadable
  *
  */
 class Post
@@ -35,6 +38,20 @@ class Post
      * @ORM\Column(type="string", length=100)
      */
     protected $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $coverImage;
+
+    /**
+     * @Vich\UploadableField(mapping="post_images", fileNameProperty="coverImage")
+     *
+     * @var File
+     */
+    protected $coverImageFile;
 
     /**
      * @var string
@@ -171,6 +188,41 @@ class Post
     {
         $this->status = $status;
     }
+
+    /**
+     * @return string
+     */
+    public function getCoverImage()
+    {
+        return $this->coverImage;
+    }
+
+    /**
+     * @param string $coverImage
+     */
+    public function setCoverImage($coverImage)
+    {
+        $this->coverImage = $coverImage;
+    }
+
+    /**
+     * @return File
+     */
+    public function getCoverImageFile()
+    {
+        return $this->coverImageFile;
+    }
+
+    /**
+     * @param File $coverImageFile
+     */
+    public function setCoverImageFile($coverImageFile)
+    {
+
+        $this->coverImageFile = $coverImageFile;
+    }
+
+
 
 
 }

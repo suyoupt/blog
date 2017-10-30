@@ -18,9 +18,13 @@
                 List posts
             </div>
             <div class="card-body">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
                 <ul class="list-unstyled">
-                    {% for post in posts %}
+                    {% for post in pagination %}
                         <li class="media">
+                            <img class="mr-3" width="60px" src="{{ vich_uploader_asset(post, 'coverImageFile') }}" alt="Generic placeholder image">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">{{ post.title }}
                                     <small>
@@ -38,11 +42,17 @@
                                     </div>
 
                                 </h5>
-                                {{ post.body }}
+
+                                <div>{{ post.body | striptags |  slice(0, 100) | raw  }}</div>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
+
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
 

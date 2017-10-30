@@ -43,15 +43,21 @@ class PostController extends Controller
 //            ->getQuery()
 //        ;
 
-        $posts = $this->getDoctrine()->getRepository("AppBundle:Post")->getByUserAndKeyword(
+        $qb = $this->getDoctrine()->getRepository("AppBundle:Post")->getQbByUserAndKeyword(
             $this->getUser()->getId(),
             $word
         );
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
 
         return $this->render("post/index.html.twig", [
-            "posts" => $posts,
+            "pagination" => $pagination,
             "searchForm" => $this->createSearchForm()->createView()
         ]);
     }

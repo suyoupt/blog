@@ -13,8 +13,11 @@
             <div class="card-header">
                <h3>{{ post.title }}</h3>
             </div>
+            <img src="{{ vich_uploader_asset(post, 'coverImageFile') }}" alt="">
+
             <div class="card-body">
-                {{ post.body }}
+                {# post.body | striptags("<p><b><div><ul><li><ol>") | raw  #}
+                {{ post.body  | raw   }}
             </div>
         </div>
 
